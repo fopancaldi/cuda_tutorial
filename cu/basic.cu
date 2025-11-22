@@ -31,7 +31,7 @@ int main() {
     // Allocation
     const std::size_t mem_size = arr_h.size() * sizeof(float_pt);
     float_pt* arr_d = nullptr;
-    check_err(cudaMallocAsync(reinterpret_cast<void**>(&arr_d), mem_size, stream));
+    check_err(cudaMallocAsync(&arr_d, mem_size, stream));
 
     // Copy
     check_err(cudaMemcpyAsync(arr_d, arr_h.data(), mem_size, cudaMemcpyHostToDevice, stream));
@@ -44,7 +44,7 @@ int main() {
     check_err(cudaMemcpyAsync(arr_h.data(), arr_d, mem_size, cudaMemcpyDeviceToHost, stream));
 
     // Deallocation
-    check_err(cudaFreeAsync(reinterpret_cast<void*>(arr_d), stream));
+    check_err(cudaFreeAsync(arr_d, stream));
 
     check_err(cudaStreamSynchronize(stream));
     check(std::span(arr_h), [](int i) { return i * std::sqrt(float_pt{2}); });
