@@ -18,7 +18,7 @@ __global__ void multiply_kernel(A* ptr, A factor, std::size_t arr_len, unsigned 
 }
 
 int main() {
-    using namespace cuda_tutorial;
+    using namespace ct;
     namespace c = constants;
 
     std::array<float_pt, c::array_len> arr_h;
