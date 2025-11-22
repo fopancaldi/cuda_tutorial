@@ -29,19 +29,19 @@ int main() {
     check_err(cudaStreamCreate(&stream));
 
     // Allocation
-    const std::size_t mem_size = arr_h.size() * sizeof(float_pt);
+    const std::size_t bytes = arr_h.size() * sizeof(float_pt);
     float_pt* arr_d = nullptr;
-    check_err(cudaMallocAsync(&arr_d, mem_size, stream));
+    check_err(cudaMallocAsync(&arr_d, bytes, stream));
 
     // Copy
-    check_err(cudaMemcpyAsync(arr_d, arr_h.data(), mem_size, cudaMemcpyHostToDevice, stream));
+    check_err(cudaMemcpyAsync(arr_d, arr_h.data(), bytes, cudaMemcpyHostToDevice, stream));
 
     // Kernels
     const work_division work_div = make_work_div(arr_h.size());
     multiply_kernel<float_pt><<<work_div.blocks, work_div.block_threads, 0, stream>>>(
         arr_d, 2, arr_h.size(), work_div.block_threads.x);
 
-    check_err(cudaMemcpyAsync(arr_h.data(), arr_d, mem_size, cudaMemcpyDeviceToHost, stream));
+    check_err(cudaMemcpyAsync(arr_h.data(), arr_d, bytes, cudaMemcpyDeviceToHost, stream));
 
     // Deallocation
     check_err(cudaFreeAsync(arr_d, stream));
