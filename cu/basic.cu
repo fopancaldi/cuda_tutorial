@@ -7,8 +7,8 @@
 
 namespace ct = cuda_tutorial;
 
-template <ct::concepts::arithmetic T>
-__global__ void multiply_kernel(T* ptr, T factor, std::size_t arr_len, unsigned int block_threads) {
+template <ct::concepts::arithmetic A>
+__global__ void multiply_kernel(A* ptr, A factor, std::size_t arr_len, unsigned int block_threads) {
     assert(threadIdx.y == 0 and threadIdx.z == 0);
     assert(blockIdx.y == 0 and blockIdx.z == 0);
     const unsigned int i = threadIdx.x + blockIdx.x * block_threads;
