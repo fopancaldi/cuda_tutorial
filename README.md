@@ -6,7 +6,7 @@ Code I have used to display some basic functionalities of [CUDA](https://develop
 
 The code should be run on a CUDA-capable machine, i.e. one where the CUDA toolkit was installed.
 
-There are no dependencies.
+There are no dependencies. TODO: cufft
 
 ## Installation
 
@@ -17,7 +17,8 @@ Clone the repo.
     cmake -S . -B build
     cmake --build build
 
-Then `build` will contain one executable per source file in `cu`.
+TODO: `-DDISABLE_CUFFT`
+Then `build` will contain TODO.
 
 # Coding conventions
 
