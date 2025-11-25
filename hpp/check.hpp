@@ -26,8 +26,7 @@ bool are_equal(FP fp1, FP fp2) {
         return std::abs(fp1) < c::max_machine_error<FP> and
                std::abs(fp2) < c::max_machine_error<FP>;
     } else {
-        const FP den = fp1 == 0 ? fp2 : fp1;
-        return std::abs((fp1 - fp2) / den) < c::max_relative_error<FP>;
+        return std::abs((fp1 - fp2) / fp1) < c::max_relative_error<FP>;
     }
 }
 
