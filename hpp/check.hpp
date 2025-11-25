@@ -19,10 +19,7 @@ template <std::floating_point FP>
 bool are_equal(FP fp1, FP fp2) {
     namespace c = constants;
 
-    if (fp1 == 0 and fp2 == 0) {
-        return true;
-    } else if (std::abs(fp1) < c::max_machine_error<FP> or
-               std::abs(fp2) < c::max_machine_error<FP>) {
+    if (std::abs(fp1) < c::max_machine_error<FP> or std::abs(fp2) < c::max_machine_error<FP>) {
         return std::abs(fp1) < c::max_machine_error<FP> and
                std::abs(fp2) < c::max_machine_error<FP>;
     } else {
