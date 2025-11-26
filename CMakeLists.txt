@@ -20,6 +20,11 @@ add_compile_options("--expt-relaxed-constexpr")
 set_property(GLOBAL PROPERTY CUDA_SEPARABLE_COMPILATION ON)
 set(CMAKE_CUDA_ARCHITECTURES "50;60;61;62;70;80;90")
 
+if(NOT DISABLE_CUFFT)
+    find_package(CUDAToolkit REQUIRED)
+    link_libraries(CUDA::cufft)
+endif()
+
 function(build_all_sources directory)
     if(NOT IS_DIRECTORY "${CMAKE_SOURCE_DIR}/${directory}")
         message(FATAL_ERROR "Cannot find directory")
