@@ -15,7 +15,7 @@ int main() {
     using namespace ct;
     namespace c = constants;
 
-    constexpr float_pt frequency = c::sqrt2<float_pt> - 1;
+    constexpr float_pt frequency = 1 / c::sqrt2<float_pt>;
 
     std::array<ct::cufftComplex, c::array_len> signal_h;
     std::ranges::generate(signal_h, [i = 0, frequency]() mutable {
