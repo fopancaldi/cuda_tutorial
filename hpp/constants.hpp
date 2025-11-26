@@ -20,4 +20,10 @@ constexpr FP max_machine_error = 1000 * std::numeric_limits<FP>::epsilon();
 template <std::floating_point FP>
 constexpr FP pi = std::numbers::pi_v<FP>;
 
+template <std::floating_point FP>
+constexpr FP sqrt2 = std::numbers::sqrt2_v<FP>;
+
+template <std::floating_point FP>
+constexpr FP sqrt3 = std::numbers::sqrt3_v<FP>;
+
 } // namespace cuda_tutorial::constants

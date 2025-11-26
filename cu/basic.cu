@@ -22,7 +22,7 @@ int main() {
     namespace c = constants;
 
     std::array<float_pt, c::array_len> arr_h;
-    std::ranges::generate(arr_h, [i = 0]() mutable { return i++ / std::sqrt(float_pt{2}); });
+    std::ranges::generate(arr_h, [i = 0]() mutable { return i++ / c::sqrt2<float_pt>; });
 
     // Streams
     cudaStream_t stream;
@@ -47,5 +47,5 @@ int main() {
     check_err(cudaFreeAsync(arr_d, stream));
 
     check_err(cudaStreamSynchronize(stream));
-    check(std::span(arr_h), [](int i) { return i * std::sqrt(float_pt{2}); });
+    check(std::span(arr_h), [](int i) { return i * c::sqrt2<float_pt>; });
 }
