@@ -1,5 +1,8 @@
 #include "cuda_tutorial.hpp"
 
+#include <iomanip>
+#include <iostream>
+
 #include <algorithm>
 #include <array>
 #include <ranges>
@@ -60,5 +63,7 @@ int main() {
     std::ranges::generate(in_h, [i = 0]() mutable { return i++ / c::sqrt3<float_pt>; });
 
     const float_pt out_h = accumulate(std::span(in_h));
-    assert(out_h == c::array_len * (c::array_len - 1) / (2 * c::sqrt3<float_pt>));
+    // TODO: Use a better comparison
+    assert(
+        internal::are_equal(out_h, c::array_len * (c::array_len - 1) / (2 * c::sqrt3<float_pt>)));
 }
