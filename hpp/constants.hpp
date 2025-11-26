@@ -11,6 +11,7 @@ constexpr dim3 block_threads{16, 1, 1};
 
 constexpr size array_len = 1000;
 
+// TODO: Find a better way of comparing the floating point numbers
 template <std::floating_point FP>
 constexpr FP max_relative_error = 0.001f;
 
