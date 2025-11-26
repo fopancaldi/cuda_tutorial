@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <array>
-#include <cmath>
 #include <span>
 
 namespace ct = cuda_tutorial;
