@@ -41,7 +41,7 @@ bool are_equal(T const& t1, T const& t2) {
 template <std::ranges::view View1, std::ranges::view View2>
     requires requires {
         typename std::common_type_t<std::ranges::range_value_t<View1>,
-                                    std::ranges::range_value_t<View1>>;
+                                    std::ranges::range_value_t<View2>>;
     }
 void check(View1 view1, View2 view2) {
     assert(view1.size() == view2.size());
