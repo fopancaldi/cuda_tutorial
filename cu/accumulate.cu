@@ -39,7 +39,7 @@ View::value_type accumulate(View view_h) {
     cudaMalloc(&input_d, bytes_in);
     cudaMalloc(&output_d, bytes_out);
     cudaMemcpy(input_d, view_h.data(), bytes_in, cudaMemcpyHostToDevice);
-    cudaMemset(output_d, 0x0, bytes_out);
+    cudaMemset(output_d, 0x00, bytes_out);
 
     const ct::work_division work_div = ct::make_work_div(view_h.size());
     accumulate_kernel<value><<<work_div.blocks, work_div.block_threads>>>(
