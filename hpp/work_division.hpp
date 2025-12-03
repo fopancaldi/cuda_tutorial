@@ -32,4 +32,8 @@ inline work_division make_work_div(ulonglong3 const& elements) {
     return {blocks, c::block_threads};
 }
 
+inline work_division make_work_div(dim3 const& elements) {
+    return make_work_div(ulonglong3{elements.x, elements.y, elements.z});
+}
+
 } // namespace cuda_tutorial
