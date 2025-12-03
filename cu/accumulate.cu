@@ -1,8 +1,5 @@
 #include "cuda_tutorial.hpp"
 
-#include <iomanip>
-#include <iostream>
-
 #include <algorithm>
 #include <array>
 #include <ranges>
