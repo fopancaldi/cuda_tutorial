@@ -33,6 +33,7 @@ void check_invocation(T const& input, T const& expected_output, Func&& func) {
     assert(output == expected_output);
 }
 
+// TODO: See if it is possible to use function pointers
 /* template <ct::concepts::arithmetic A>
 __host__ __device__ A double_fn(A const& a) {
     return A{2} * a;
