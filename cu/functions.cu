@@ -55,9 +55,12 @@ struct multiply_str {
 };
 
 int main() {
+    using namespace ct;
+
     constexpr int input = 5, expected_output = 2 * input;
 
     check_invocation(input, expected_output, double_str{});
     check_invocation(input, expected_output, multiply_str<2>{});
     check_invocation(input, expected_output, [] __host__ __device__(int i) { return 2 * i; });
+    check_never_err();
 }

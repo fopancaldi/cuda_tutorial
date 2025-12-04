@@ -63,4 +63,5 @@ int main() {
     // TODO: Use a better comparison
     assert(
         internal::are_equal(out_h, c::array_len * (c::array_len - 1) / (2 * c::sqrt3<float_pt>)));
+    check_never_err();
 }

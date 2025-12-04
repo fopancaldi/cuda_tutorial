@@ -49,4 +49,5 @@ int main() {
                   std::sin(len * c::pi<float_pt> * frequency) /
                   std::sin(c::pi<float_pt> * (frequency - static_cast<float_pt>(i) / len)));
           });
+    check_never_err();
 }

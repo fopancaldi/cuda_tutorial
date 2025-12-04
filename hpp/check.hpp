@@ -15,6 +15,8 @@ namespace cuda_tutorial {
 
 inline void check_err(cudaError_t err) { assert(err == cudaError_t::cudaSuccess); }
 
+inline void check_never_err() { check_err(cudaPeekAtLastError()); }
+
 namespace internal {
 
 template <std::floating_point FP>

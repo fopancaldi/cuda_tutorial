@@ -47,4 +47,5 @@ int main() {
 
     check_err(cudaStreamSynchronize(stream));
     check(std::span(arr_h), [](int i) { return i * c::sqrt2<float_pt>; });
+    check_never_err();
 }
