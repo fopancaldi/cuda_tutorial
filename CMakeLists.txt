@@ -9,13 +9,32 @@ set(CMAKE_CUDA_STANDARD 20)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 
 if(CMAKE_BUILD_TYPE STREQUAL "")
-    set(CMAKE_BUILD_TYPE "Debug")
+    set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-# TODO: CMAKE_*_FLAGS, CMAKE_*_FLAGS_DEBUG
-
+string(
+    APPEND
+    CMAKE_CXX_FLAGS
+    " -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wcast-qual"
+    " -Wformat=2 -Wundef -Wshadow -Wcast-align -Wunused -Wnull-dereference"
+    " -Wdouble-promotion -Wimplicit-fallthrough -Wextra-semi"
+    " -Woverloaded-virtual -Wnon-virtual-dtor -Wold-style-cast"
+)
+string(
+    APPEND
+    CMAKE_CXX_FLAGS_DEBUG
+    # TODO: Understand why the address sanitizer does not behave well in the cnaf machine
+    # " -fsanitize=address,undefined -fno-omit-frame-pointer -pg"
+    " -fno-omit-frame-pointer -pg"
+)
+string(
+    APPEND
+    CMAKE_EXE_LINKER_FLAGS_DEBUG
+    # TODO: Same as CMAKE_CXX_FLAGS
+    # " -fsanitize=address,undefined -fno-omit-frame-pointer"
+    " -fno-omit-frame-pointer"
+)
 string(APPEND CMAKE_CUDA_FLAGS " --expt-relaxed-constexpr --extended-lambda")
-
 string(APPEND CMAKE_CUDA_FLAGS_DEBUG " -lineinfo")
 
 set_property(GLOBAL PROPERTY CUDA_SEPARABLE_COMPILATION ON)
@@ -37,7 +56,7 @@ function(build_all_sources directory)
         block()
             cmake_path(REMOVE_EXTENSION source OUTPUT_VARIABLE source_no_ext)
             cmake_path(GET source_no_ext FILENAME file_name)
-            set(target_name "${directory}_${file_name}")
+            set(target_name ${directory}_${file_name})
             add_executable(${target_name} ${source})
             set_property(
                 TARGET ${target_name}
