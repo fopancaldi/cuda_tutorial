@@ -9,13 +9,13 @@ template <typename T>
 concept arithmetic = std::is_arithmetic_v<T>;
 
 template <typename T>
-concept integral_of_int_ref = std::integral<std::remove_reference_t<T>>;
+concept integral_or_int_ref = std::integral<std::remove_reference_t<T>>;
 
 template <typename T>
 concept unsigned3 = requires(T t) {
-    { t.x } -> integral_of_int_ref;
-    { t.y } -> integral_of_int_ref;
-    { t.z } -> integral_of_int_ref;
+    { t.x } -> integral_or_int_ref;
+    { t.y } -> integral_or_int_ref;
+    { t.z } -> integral_or_int_ref;
 };
 
 template <typename Checker, typename T>
