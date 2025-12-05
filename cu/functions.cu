@@ -7,7 +7,7 @@ namespace ct = cuda_tutorial;
 
 template <typename T, typename Func>
     requires std::is_invocable_r_v<T, Func, T const&>
-__global__ void invoke_kernel(T const* input, T* output, Func&& func) {
+__global__ void invoke_kernel(T const* input, T* output, Func func) {
     *output = func(*input);
 }
 
@@ -47,11 +47,21 @@ struct double_str {
 };
 
 template <ct::concepts::arithmetic auto Factor>
-struct multiply_str {
+struct templ_multiply_str {
     template <ct::concepts::arithmetic A>
         requires requires { typename std::common_type_t<A, decltype(Factor)>; }
     __host__ __device__ auto operator()(A const& a) const {
         return a * Factor;
+    }
+};
+
+template <ct::concepts::arithmetic A>
+struct multiply_str {
+    A value;
+    template <ct::concepts::arithmetic A2>
+        requires requires { typename std::common_type_t<A, A2>; }
+    __host__ __device__ auto operator()(A2 const& a) const {
+        return a * value;
     }
 };
 
@@ -61,7 +71,8 @@ int main() {
     constexpr int input = 5, expected_output = 2 * input;
 
     check_invocation(input, expected_output, double_str{});
-    check_invocation(input, expected_output, multiply_str<2>{});
+    check_invocation(input, expected_output, templ_multiply_str<2>{});
+    check_invocation(input, expected_output, multiply_str{2});
     check_invocation(input, expected_output, [] __host__ __device__(int i) { return 2 * i; });
     check_never_err();
 }
