@@ -5,17 +5,12 @@
 
 #include <algorithm>
 #include <cassert>
-#include <cuda.h>
 #include <ranges>
 #include <span>
 #include <utility>
 #include <vector>
 
 namespace cuda_tutorial {
-
-inline void check_err(cudaError_t err) { assert(err == cudaError_t::cudaSuccess); }
-
-inline void check_never_err() { check_err(cudaPeekAtLastError()); }
 
 namespace internal {
 
