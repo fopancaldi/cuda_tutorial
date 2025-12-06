@@ -5,6 +5,9 @@
 
 namespace cuda_tutorial::concepts {
 
+template <typename T1, typename T2>
+concept common_type = requires { typename std::common_type_t<T1, T2>; };
+
 template <typename T>
 concept arithmetic = std::is_arithmetic_v<T>;
 
