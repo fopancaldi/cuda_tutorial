@@ -4,5 +4,6 @@
 #include "check.hpp"
 #include "concepts.hpp"
 #include "constants.hpp"
+#include "error.hpp"
 #include "typedefs.hpp"
 #include "work_division.hpp"
