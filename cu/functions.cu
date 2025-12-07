@@ -90,6 +90,7 @@ int main() {
     check_invocation(input, expected_output, templ_multiply_str<2>{});
     check_invocation(input, expected_output, multiply_str{2});
     check_invocation(input, expected_output, [] __host__ __device__(int i) { return 2 * i; });
-    check_invocation(input, expected_output, call_fn_cl<int (*)(int), int>(double_fn_ptr<int>));
+    check_invocation(input, expected_output,
+                     call_fn_cl<int (*)(int const&), int>(double_fn_ptr<int>));
     ct::check_never_err();
 }
