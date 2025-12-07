@@ -12,6 +12,9 @@ template <typename T>
 concept arithmetic = std::is_arithmetic_v<T>;
 
 template <typename T>
+concept pointer = std::is_pointer_v<T>;
+
+template <typename T>
 concept integral_or_int_ref = std::integral<std::remove_reference_t<T>>;
 
 template <typename T>

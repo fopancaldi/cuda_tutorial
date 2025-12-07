@@ -67,9 +67,8 @@ __device__ A double_fn(A const& a) {
 template <ct::concepts::arithmetic A>
 __device__ A (*const double_fn_ptr)(A const&) = double_fn;
 
-template <typename FnPtr, ct::concepts::arithmetic A>
-    requires std::is_pointer_v<FnPtr> and
-             std::is_invocable_r_v<A, std::remove_pointer_t<FnPtr>, A const&>
+template <ct::concepts::pointer FnPtr, ct::concepts::arithmetic A>
+    requires std::is_invocable_r_v<A, std::remove_pointer_t<FnPtr>, A const&>
 class call_fn_cl {
     A (*fn_ptr)(A const&);
 
