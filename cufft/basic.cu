@@ -19,7 +19,7 @@ int main() {
 
     std::array<ct::cufftComplex, c::array_len> signal_h;
     std::ranges::generate(signal_h, [i = 0, frequency]() mutable {
-        const std::complex c = std::polar<float_pt>(1, 2 * c::pi<float_pt> * frequency * i++);
+        std::complex const c = std::polar<float_pt>(1, 2 * c::pi<float_pt> * frequency * i++);
         return ct::cufftComplex{c.real(), c.imag()};
     });
 
@@ -27,7 +27,7 @@ int main() {
     ct::cufftComplex *signal_d = nullptr, *dft_d = nullptr;
     cufftPlan1d(&plan, static_cast<int>(std::ssize(signal_h)), ct::cufftTypeC2C, 1);
 
-    const std::size_t bytes = signal_h.size() * sizeof(ct::cufftComplex);
+    std::size_t const bytes = signal_h.size() * sizeof(ct::cufftComplex);
     for (ct::cufftComplex*& ptr : {rw(signal_d), rw(dft_d)}) {
         cudaMalloc(&ptr, bytes);
     }
