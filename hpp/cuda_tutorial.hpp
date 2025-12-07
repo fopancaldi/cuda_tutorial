@@ -5,5 +5,6 @@
 #include "concepts.hpp"
 #include "constants.hpp"
 #include "error.hpp"
+#include "fill.hpp"
 #include "typedefs.hpp"
 #include "work_division.hpp"
