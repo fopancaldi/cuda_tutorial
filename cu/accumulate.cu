@@ -28,8 +28,8 @@ __global__ void accumulate_kernel(const A* in, A* out, std::size_t arr_len,
     }
 }
 
-template <typename View>
-    requires std::ranges::contiguous_range<View> and std::ranges::view<View> and
+template <std::ranges::view View>
+    requires std::ranges::contiguous_range<View> and
              ct::concepts::arithmetic<typename View::value_type>
 View::value_type accumulate(View view_h) {
     using value = View::value_type;
