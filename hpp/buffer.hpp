@@ -5,6 +5,7 @@
 #include <cassert>
 #include <cuda.h>
 #include <ranges>
+#include <type_traits>
 
 namespace cuda_tutorial {
 
