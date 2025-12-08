@@ -7,4 +7,5 @@
 #include "error.hpp"
 #include "fill.hpp"
 #include "typedefs.hpp"
+#include "util.hpp"
 #include "work_division.hpp"
