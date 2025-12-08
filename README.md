@@ -21,4 +21,4 @@ Clone the repo.
 
 Then `build` will contain (inside the opportune subdirectories) one executable for each source file in `cu` and `cufft`.
 
-Add `-D DISABLE_CUFFT=ON` to not build the sources in `cufft`.
+Add `-D DISABLE_CUFFT=ON` to omit building the sources in `cufft` and linking to the library.
