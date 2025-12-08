@@ -46,28 +46,27 @@ __global__ void reduce_iter_kernel(T const* in_arr, T* out_arr, RedFunc red_func
 
 template <typename T, typename RedFunc>
     requires std::is_invocable_r_v<T, RedFunc, T const&, T const&>
-void do_reduce_iter(gpu_array<T>& current_arr, RedFunc&& red_func, T const& neutral_element) {
+void do_reduce_iter(gpu_array<T>& arr, RedFunc&& red_func, T const& neutral_element) {
     namespace ctc = ct::constants;
     namespace cti = ct::internal;
 
-    std::size_t const ideal_reduced_len =
-        cti::ratio_rounded_up(current_arr.len, ctc::block_threads.x);
+    std::size_t const ideal_reduced_len = cti::ratio_rounded_up(arr.len, ctc::block_threads.x);
     gpu_array<T> reduced_arr{
         .data = nullptr,
         .len = ideal_reduced_len == 1
                    ? 1
                    : round_up_to_multiple(ideal_reduced_len, ctc::block_threads.x)};
-    cudaMalloc(&(reduced_arr.data), to_bytes<T>(current_arr.len));
+    cudaMalloc(&(reduced_arr.data), to_bytes<T>(arr.len));
     ct::fill<T>(reduced_arr.data + ideal_reduced_len, neutral_element,
                 reduced_arr.len - ideal_reduced_len);
 
-    ct::work_division const work_div = ct::make_work_div(current_arr.len);
+    ct::work_division const work_div = ct::make_work_div(arr.len);
     reduce_iter_kernel<<<work_div.blocks, work_div.block_threads,
-                         to_bytes<T>(work_div.block_threads.x)>>>(
-        current_arr.data, reduced_arr.data, red_func, ctc::block_threads.x);
+                         to_bytes<T>(work_div.block_threads.x)>>>(arr.data, reduced_arr.data,
+                                                                  red_func, ctc::block_threads.x);
 
-    cudaFree(current_arr.data);
-    current_arr = reduced_arr;
+    cudaFree(arr.data);
+    arr = reduced_arr;
 }
 
 template <std::ranges::view View, typename RedFunc>
