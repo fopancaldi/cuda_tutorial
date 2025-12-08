@@ -46,6 +46,7 @@ class gpu_buffer {
         return *this;
     }
     gpu_buffer<T>& operator=(gpu_buffer<T>&& other) {
+        cudaFree(m_data);
         m_data = other.m_data;
         other.m_data = nullptr;
         m_len = other.m_len;
