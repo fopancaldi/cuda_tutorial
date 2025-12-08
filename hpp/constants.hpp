@@ -3,13 +3,14 @@
 #include "typedefs.hpp"
 
 #include <concepts>
+#include <cstddef>
 #include <numbers>
 
 namespace cuda_tutorial::constants {
 
 constexpr dim3 block_threads{16, 1, 1};
 
-constexpr size array_len = 1000;
+constexpr std::size_t array_len = 1000;
 
 // TODO: Find a better way of comparing the floating point numbers
 template <std::floating_point FP>
