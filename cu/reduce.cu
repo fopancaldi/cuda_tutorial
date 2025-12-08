@@ -20,7 +20,7 @@ std::size_t to_bytes(std::size_t count) {
 }
 
 auto round_up_to_multiple(std::integral auto to_round, std::integral auto multiple_base) {
-    return multiple_base * ct::internal::ratio_rounded_up(to_round, multiple_base);
+    return multiple_base * ct::util::ratio_rounded_up(to_round, multiple_base);
 }
 
 template <typename T, typename RedFunc>
@@ -51,9 +51,9 @@ template <typename T, typename RedFunc>
     requires std::is_invocable_r_v<T, RedFunc, T const&, T const&>
 void do_reduce_iter(gpu_array<T>& arr, RedFunc&& red_func, T const& neutral_element) {
     namespace ctc = ct::constants;
-    namespace cti = ct::internal;
+    namespace ctu = ct::util;
 
-    std::size_t const ideal_reduced_len = cti::ratio_rounded_up(arr.len, ctc::block_threads.x);
+    std::size_t const ideal_reduced_len = ctu::ratio_rounded_up(arr.len, ctc::block_threads.x);
     gpu_array<T> reduced_arr{
         .data = nullptr,
         .len = ideal_reduced_len == 1
