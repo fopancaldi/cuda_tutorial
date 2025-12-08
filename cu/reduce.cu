@@ -1,6 +1,9 @@
 #include "cuda_tutorial.hpp"
 
+#include <algorithm>
+#include <array>
 #include <ranges>
+#include <span>
 #include <type_traits>
 
 namespace ct = cuda_tutorial;
