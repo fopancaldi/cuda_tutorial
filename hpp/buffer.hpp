@@ -1,9 +1,12 @@
 #pragma once
 
+#include "error.hpp"
+
 #include "util.hpp"
 
 #include <cassert>
 #include <cuda.h>
+#include <iostream>
 #include <ranges>
 #include <type_traits>
 
@@ -23,10 +26,6 @@ class gpu_buffer {
         requires std::ranges::contiguous_range<View> and
                      std::is_same_v<T, std::remove_cv_t<typename View::value_type>>
     gpu_buffer(View view) : m_data{nullptr}, m_len{view.size()} {
-        cudaPointerAttributes view_data_attr;
-        cudaPointerGetAttributes(&view_data_attr, view.data());
-        assert(view_data_attr.type == cudaMemoryTypeHost);
-
         cudaMalloc(&m_data, util::to_bytes<T>(m_len));
         cudaMemcpy(m_data, view.data(), util::to_bytes<T>(m_len), cudaMemcpyHostToDevice);
     }
