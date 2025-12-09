@@ -20,8 +20,8 @@ __global__ void max_elem_reduce_kernel(T const* values_in, std::size_t const* in
     assert(blockIdx.y == 0 and blockIdx.z == 0);
 
     extern __shared__ std::byte shared_mem_arr[];
-    T* shared_arr_v = reinterpret_cast<T*>(shared_mem_arr);
-    std::size_t* shared_arr_i =
+    T* const shared_arr_v = reinterpret_cast<T*>(shared_mem_arr);
+    std::size_t* const shared_arr_i =
         reinterpret_cast<std::size_t*>(shared_mem_arr + ctu::to_bytes<T>(blockDim.x));
     unsigned int const global_idx = threadIdx.x + blockIdx.x * blockDim.x;
     bool const outside_arr = (global_idx >= arr_len);
