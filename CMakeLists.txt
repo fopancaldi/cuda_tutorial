@@ -57,13 +57,9 @@ function(build_all_sources directory)
             cmake_path(GET source_no_ext FILENAME file_name)
             set(target_name ${directory}_${file_name})
             add_executable(${target_name} ${source})
-            set_property(
-                TARGET ${target_name}
-                PROPERTY OUTPUT_NAME ${file_name}
-            )
-            set_property(
-                TARGET ${target_name}
-                PROPERTY CUDA_ARCHITECTURES native
+            set_target_properties(
+                ${target_name}
+                PROPERTIES OUTPUT_NAME ${file_name} CUDA_ARCHITECTURES native
             )
             target_include_directories(
                 ${target_name}
