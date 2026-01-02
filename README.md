@@ -1,18 +1,12 @@
 Code I have used to display some basic functionalities of [CUDA](https://developer.nvidia.com/cuda-toolkit) while learning it.
 
-# Getting started
+# Prerequisites
 
-## Prerequisites
-
-The code should be run on a CUDA-capable machine, i.e. one where the CUDA toolkit was installed.
+The code should be run on a CUDA-capable machine.
 
 There are no dependencies.
 [cuFFT](https://docs.nvidia.com/cuda/cufft/index.html) can optionally be installed to build some related examples.
 It should automatically be installed with the CUDA toolkit.
-
-## Installation
-
-Clone the repo.
 
 # Usage
 
