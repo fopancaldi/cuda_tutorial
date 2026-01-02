@@ -38,7 +38,6 @@ string(APPEND CMAKE_CUDA_FLAGS " --expt-relaxed-constexpr --extended-lambda")
 string(APPEND CMAKE_CUDA_FLAGS_DEBUG " -lineinfo")
 
 set_property(GLOBAL PROPERTY CUDA_SEPARABLE_COMPILATION ON)
-set(CMAKE_CUDA_ARCHITECTURES "60;61;62;70;80;90")
 
 if(NOT DISABLE_CUFFT)
     find_package(CUDAToolkit REQUIRED)
@@ -61,6 +60,10 @@ function(build_all_sources directory)
             set_property(
                 TARGET ${target_name}
                 PROPERTY OUTPUT_NAME ${file_name}
+            )
+            set_property(
+                TARGET ${target_name}
+                PROPERTY CUDA_ARCHITECTURES native
             )
             target_include_directories(
                 ${target_name}
