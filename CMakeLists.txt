@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CUDA_STANDARD 20)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+set(CMAKE_CUDA_SEPARABLE_COMPILATION ON)
+set(CMAKE_CUDA_ARCHITECTURES native)
 
 if(CMAKE_BUILD_TYPE STREQUAL "")
     set(CMAKE_BUILD_TYPE Debug)
@@ -37,8 +39,6 @@ string(
 string(APPEND CMAKE_CUDA_FLAGS " --expt-relaxed-constexpr --extended-lambda")
 string(APPEND CMAKE_CUDA_FLAGS_DEBUG " -lineinfo")
 
-set_property(GLOBAL PROPERTY CUDA_SEPARABLE_COMPILATION ON)
-
 if(NOT DISABLE_CUFFT)
     find_package(CUDAToolkit REQUIRED)
     link_libraries(CUDA::cufft)
@@ -59,7 +59,7 @@ function(build_all_sources directory)
             add_executable(${target_name} ${source})
             set_target_properties(
                 ${target_name}
-                PROPERTIES OUTPUT_NAME ${file_name} CUDA_ARCHITECTURES native
+                PROPERTIES OUTPUT_NAME ${file_name}
             )
             target_include_directories(
                 ${target_name}
