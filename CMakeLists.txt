@@ -15,29 +15,41 @@ if(CMAKE_BUILD_TYPE STREQUAL "")
 endif()
 
 string(
-    APPEND
-    CMAKE_CXX_FLAGS
-    " -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wcast-qual"
-    " -Wformat=2 -Wundef -Wshadow -Wcast-align -Wunused -Wnull-dereference"
-    " -Wdouble-promotion -Wimplicit-fallthrough -Wextra-semi"
-    " -Woverloaded-virtual -Wnon-virtual-dtor -Wold-style-cast"
+    APPEND CMAKE_CXX_FLAGS
+    -Wall
+    -Wextra
+    -Wpedantic
+    -Wconversion
+    -Wsign-conversion
+    -Wcast-qual
+    -Wformat=2
+    -Wundef
+    -Wshadow
+    -Wcast-align
+    -Wunused
+    -Wnull-dereference
+    -Wdouble-promotion
+    -Wimplicit-fallthrough
+    -Wextra-semi
+    -Woverloaded-virtual
+    -Wnon-virtual-dtor
+    -Wold-style-cast
 )
 string(
-    APPEND
-    CMAKE_CXX_FLAGS_DEBUG
+    APPEND CMAKE_CXX_FLAGS_DEBUG
     # TODO: Understand why the address sanitizer does not behave well in the cnaf machine
-    # " -fsanitize=address,undefined -fno-omit-frame-pointer -pg"
-    " -fno-omit-frame-pointer -pg"
+    # -fsanitize=address,undefined
+    -fno-omit-frame-pointer
+    -pg
 )
 string(
-    APPEND
-    CMAKE_EXE_LINKER_FLAGS_DEBUG
+    APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG
     # TODO: Same as CMAKE_CXX_FLAGS
-    # " -fsanitize=address,undefined -fno-omit-frame-pointer"
-    " -fno-omit-frame-pointer"
+    # -fsanitize=address,undefined
+    -fno-omit-frame-pointer
 )
-string(APPEND CMAKE_CUDA_FLAGS " --expt-relaxed-constexpr --extended-lambda")
-string(APPEND CMAKE_CUDA_FLAGS_DEBUG " -lineinfo")
+string(APPEND CMAKE_CUDA_FLAGS --expt-relaxed-constexpr --extended-lambda)
+string(APPEND CMAKE_CUDA_FLAGS_DEBUG -lineinfo)
 
 if(NOT DISABLE_CUFFT)
     find_package(CUDAToolkit REQUIRED)
