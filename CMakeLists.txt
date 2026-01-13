@@ -60,7 +60,7 @@ function(build_all_sources directory)
   if(NOT IS_DIRECTORY ${CMAKE_SOURCE_DIR}/${directory})
     message(FATAL_ERROR "Directory not found")
   endif()
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${directory})
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${directory}")
 
   file(GLOB sources ${CMAKE_SOURCE_DIR}/${directory}/*.cu)
   foreach(source IN LISTS sources)
