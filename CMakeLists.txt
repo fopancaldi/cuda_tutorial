@@ -2,9 +2,13 @@ cmake_minimum_required(VERSION 3.25)
 project(
   cuda_tutorial
   VERSION 0.0.1
-  LANGUAGES CXX CUDA)
+  LANGUAGES C CXX CUDA)
 
 option(DISABLE_CUFFT "Do not build cufft-dependent executables" OFF)
+
+if(CMAKE_BUILD_TYPE STREQUAL "")
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,10 +16,6 @@ set(CMAKE_CUDA_STANDARD 20)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 set(CMAKE_CUDA_SEPARABLE_COMPILATION ON)
 set(CMAKE_CUDA_ARCHITECTURES native)
-
-if(CMAKE_BUILD_TYPE STREQUAL "")
-  set(CMAKE_BUILD_TYPE Debug)
-endif()
 
 string(
   APPEND
@@ -48,8 +48,8 @@ string(
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG
        # TODO: Same as CMAKE_CXX_FLAGS -fsanitize=address,undefined
        -fno-omit-frame-pointer)
-string(APPEND CMAKE_CUDA_FLAGS --expt-relaxed-constexpr --extended-lambda)
-string(APPEND CMAKE_CUDA_FLAGS_DEBUG -lineinfo)
+string(APPEND CMAKE_CUDA_FLAGS " --expt-relaxed-constexpr --extended-lambda")
+string(APPEND CMAKE_CUDA_FLAGS_DEBUG " -lineinfo")
 
 if(NOT DISABLE_CUFFT)
   find_package(CUDAToolkit REQUIRED)
@@ -60,7 +60,7 @@ function(build_all_sources directory)
   if(NOT IS_DIRECTORY ${CMAKE_SOURCE_DIR}/${directory})
     message(FATAL_ERROR "Directory not found")
   endif()
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${directory}")
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${directory})
 
   file(GLOB sources ${CMAKE_SOURCE_DIR}/${directory}/*.cu)
   foreach(source IN LISTS sources)
