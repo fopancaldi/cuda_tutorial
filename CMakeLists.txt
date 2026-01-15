@@ -29,12 +29,12 @@ string(
   CMAKE_CXX_FLAGS_DEBUG
   # TODO: Understand why the address sanitizer does not behave well in the cnaf
   # machine -fsanitize=address,undefined
-  " -fno-omit-frame-pointer -pg")
+  " -O0 -fno-omit-frame-pointer -g -pg")
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG
        # TODO: Same as CMAKE_CXX_FLAGS -fsanitize=address,undefined
        " -fno-omit-frame-pointer")
 string(APPEND CMAKE_CUDA_FLAGS " --expt-relaxed-constexpr --extended-lambda")
-string(APPEND CMAKE_CUDA_FLAGS_DEBUG " -lineinfo")
+string(APPEND CMAKE_CUDA_FLAGS_DEBUG " -O0 -lineinfo -g -G")
 
 if(NOT DISABLE_CUFFT)
   find_package(CUDAToolkit REQUIRED)
