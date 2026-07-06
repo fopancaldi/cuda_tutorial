@@ -33,8 +33,8 @@ string(
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG
        # TODO: Same as CMAKE_CXX_FLAGS -fsanitize=address,undefined
        " -fno-omit-frame-pointer")
-string(APPEND CMAKE_CUDA_FLAGS " --expt-relaxed-constexpr --extended-lambda")
-string(APPEND CMAKE_CUDA_FLAGS_DEBUG " -O0 -lineinfo -g -G")
+string(APPEND CMAKE_CUDA_FLAGS " --extended-lambda")
+string(APPEND CMAKE_CUDA_FLAGS_DEBUG " -O0 -g --device-debug")
 
 if(NOT DISABLE_CUFFT)
   find_package(CUDAToolkit REQUIRED)
