@@ -8,9 +8,6 @@
 
 namespace ct = cuda_tutorial;
 
-template <typename T>
-using rw = std::reference_wrapper<T>;
-
 int main() {
     namespace c = ct::constants;
 
@@ -28,7 +25,7 @@ int main() {
     cufftPlan1d(&plan, static_cast<int>(std::ssize(signal_h)), ct::cufftTypeC2C, 1);
 
     std::size_t const bytes = signal_h.size() * sizeof(ct::cufftComplex);
-    for (ct::cufftComplex*& ptr : {rw(signal_d), rw(dft_d)}) {
+    for (ct::cufftComplex*& ptr : {std::ref(signal_d), std::ref(dft_d)}) {
         cudaMalloc(&ptr, bytes);
     }
     cudaMemcpy(signal_d, signal_h.data(), bytes, cudaMemcpyHostToDevice);
@@ -37,7 +34,7 @@ int main() {
 
     std::array<ct::cufftComplex, signal_h.size()> dft_h;
     cudaMemcpy(dft_h.data(), dft_d, bytes, cudaMemcpyDeviceToHost);
-    for (ct::cufftComplex*& ptr : {rw(signal_d), rw(dft_d)}) {
+    for (ct::cufftComplex*& ptr : {std::ref(signal_d), std::ref(dft_d)}) {
         cudaFree(ptr);
     }
 
