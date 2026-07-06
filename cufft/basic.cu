@@ -12,14 +12,14 @@ template <typename T>
 using rw = std::reference_wrapper<T>;
 
 int main() {
-    using namespace ct;
-    namespace c = constants;
+    namespace c = ct::constants;
 
-    constexpr float_pt frequency = 1 / c::sqrt2<float_pt>;
+    constexpr ct::float_pt frequency = 1 / c::sqrt2<ct::float_pt>;
 
     std::array<ct::cufftComplex, c::array_len> signal_h;
     std::ranges::generate(signal_h, [i = 0, frequency]() mutable {
-        std::complex const c = std::polar<float_pt>(1, 2 * c::pi<float_pt> * frequency * i++);
+        std::complex const c =
+            std::polar<ct::float_pt>(1, 2 * c::pi<ct::float_pt> * frequency * i++);
         return ct::cufftComplex{c.real(), c.imag()};
     });
 
@@ -41,13 +41,13 @@ int main() {
         cudaFree(ptr);
     }
 
-    check(std::span(dft_h) | std::views::transform([](ct::cufftComplex c) {
-              return std::sqrt(c.x * c.x + c.y * c.y);
-          }),
-          [len = signal_h.size(), frequency](int i) {
-              return std::abs(
-                  std::sin(len * c::pi<float_pt> * frequency) /
-                  std::sin(c::pi<float_pt> * (frequency - static_cast<float_pt>(i) / len)));
-          });
-    check_never_err();
+    ct::check(std::span(dft_h) | std::views::transform([](ct::cufftComplex c) {
+                  return std::sqrt(c.x * c.x + c.y * c.y);
+              }),
+              [len = signal_h.size(), frequency](int i) {
+                  return std::abs(std::sin(len * c::pi<ct::float_pt> * frequency) /
+                                  std::sin(c::pi<ct::float_pt> *
+                                           (frequency - static_cast<ct::float_pt>(i) / len)));
+              });
+    ct::check_never_err();
 }
